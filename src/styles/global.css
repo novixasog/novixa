@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    /* Evita "flash" de fondo blanco al cargar en móviles con dark mode del sistema */
+    color-scheme: dark;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-extrabold tracking-tight;
+  }
+
+  h4,
+  h5,
+  h6 {
+    @apply font-subheading font-semibold;
+  }
+
+  ::selection {
+    @apply bg-brand-blue/30 text-white;
+  }
+
+  /* Foco visible accesible, coherente con la identidad de marca */
+  :focus-visible {
+    outline: 2px solid #00b8ff;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Scrollbar discreta acorde al dark theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #09090b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #27272a;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f3f46;
+  }
+}
+
+@layer utilities {
+  .text-gradient-brand {
+    @apply bg-brand-gradient bg-clip-text text-transparent;
+  }
+
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

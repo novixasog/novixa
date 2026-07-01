@@ -1,0 +1,47 @@
+---
+import { cn } from '@/lib/utils';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'cta' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  target?: '_blank' | '_self';
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className,
+  target,
+  ariaLabel,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-xl font-subheading font-semibold transition-all duration-200 active:scale-[0.98] focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none';
+
+const variants: Record<string, string> = {
+  primary:
+    'bg-brand-gradient text-white shadow-glow-blue hover:shadow-glow-purple hover:brightness-110',
+  secondary:
+    'bg-surface text-white border border-border hover:border-brand-blue/60 hover:bg-surface/80',
+  cta: 'bg-cta text-black shadow-glow-cta hover:bg-cta-hover',
+  ghost: 'bg-transparent text-white hover:bg-white/5',
+};
+
+const sizes: Record<string, string> = {
+  sm: 'text-sm px-4 py-2',
+  md: 'text-base px-6 py-3',
+  lg: 'text-lg px-8 py-4',
+};
+
+const classes = cn(base, variants[variant], sizes[size], className);
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class={classes} href={href} target={target} aria-label={ariaLabel} rel={target === '_blank' ? 'noopener noreferrer' : undefined}>
+  <slot />
+</Tag>

@@ -1,0 +1,121 @@
+---
+export const prerender = true; // fichas de producto estáticas: se regeneran en cada build/deploy
+
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import ProductIcon from '@/components/ui/ProductIcon.astro';
+import ProductCard from '@/components/product/ProductCard.astro';
+import TrustBadges from '@/components/product/TrustBadges.astro';
+import { products, getProductBySlug, getRelatedProducts } from '@/data/products';
+import { formatCOP } from '@/lib/utils';
+import { generateBuyWhatsappLink, generateProductWhatsappLink } from '@/lib/whatsapp';
+import { CheckCircle2, MessageCircle, ShieldCheck } from 'lucide-astro';
+
+export const getStaticPaths = (() => {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}) satisfies GetStaticPaths;
+
+const { product } = Astro.props;
+
+const buyHref = generateBuyWhatsappLink(product);
+const askHref = generateProductWhatsappLink(product);
+const related = getRelatedProducts(product);
+---
+
+<BaseLayout
+  title={product.name}
+  description={product.shortDescription}
+  path={`/productos/${product.slug}`}
+  product={product}
+  whatsappHref={askHref}
+>
+  <!-- Breadcrumb simple -->
+  <div class="container-app pt-6">
+    <nav class="font-body text-xs text-muted" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-white">Inicio</a>
+      <span class="mx-1.5">/</span>
+      <a href="/#productos" class="hover:text-white">{product.categoryLabel}</a>
+      <span class="mx-1.5">/</span>
+      <span class="text-white">{product.name}</span>
+    </nav>
+  </div>
+
+  <!-- FICHA DE PRODUCTO -->
+  <section class="container-app grid gap-10 py-8 sm:py-12 lg:grid-cols-2 lg:gap-16">
+    <!-- Visual del producto -->
+    <div class="flex aspect-square w-full items-center justify-center rounded-2xl bg-brand-gradient-radial bg-surface">
+      <div class="flex h-40 w-40 items-center justify-center rounded-3xl bg-brand-gradient text-white shadow-glow-purple sm:h-56 sm:w-56 animate-float-slow">
+        <ProductIcon icon={product.icon} class="w-20 h-20 sm:w-28 sm:h-28" strokeWidth={1.25} />
+      </div>
+    </div>
+
+    <!-- Info + CTA -->
+    <div class="flex flex-col gap-5">
+      <span class="w-fit rounded-full bg-brand-blue/10 px-3 py-1 font-subheading text-xs font-semibold uppercase tracking-wider text-brand-blue">
+        {product.categoryLabel}
+      </span>
+
+      <h1 class="font-heading text-3xl font-black text-white sm:text-4xl">{product.name}</h1>
+
+      <p class="font-body text-base text-muted">{product.description}</p>
+
+      <div class="flex items-baseline gap-3">
+        <span class="font-heading text-4xl font-extrabold text-white">{formatCOP(product.price)}</span>
+        {product.compareAtPrice && (
+          <span class="font-body text-lg text-muted line-through">{formatCOP(product.compareAtPrice)}</span>
+        )}
+      </div>
+
+      <!-- Beneficios en íconos/viñetas: el buyer persona no lee párrafos largos -->
+      <ul class="flex flex-col gap-2.5">
+        {product.features.map((feature) => (
+          <li class="flex items-start gap-2.5 font-body text-sm text-white/90">
+            <CheckCircle2 class="mt-0.5 w-5 h-5 shrink-0 text-brand-blue" strokeWidth={1.75} />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-3">
+        <ShieldCheck class="w-5 h-5 shrink-0 text-brand-blue" strokeWidth={1.75} />
+        <span class="font-subheading text-sm font-semibold text-white">
+          Garantía de {product.warrantyMonths} meses incluida
+        </span>
+      </div>
+
+      <TrustBadges warrantyMonths={product.warrantyMonths} />
+
+      <!-- CTAs principales -->
+      <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+        <Button href={buyHref} variant="cta" size="lg" target="_blank" class="flex-1" ariaLabel={`Comprar ${product.name} por WhatsApp`}>
+          <MessageCircle class="w-5 h-5" strokeWidth={2} fill="currentColor" />
+          Comprar ahora
+        </Button>
+        <Button href={askHref} variant="secondary" size="lg" target="_blank" class="flex-1" ariaLabel={`Preguntar por ${product.name} en WhatsApp`}>
+          Preguntar por WhatsApp
+        </Button>
+      </div>
+      <p class="text-center font-body text-xs text-muted sm:text-left">
+        Te atiende NOVIXA AI al instante · Pago contra entrega disponible
+      </p>
+    </div>
+  </section>
+
+  <!-- RELACIONADOS -->
+  {related.length > 0 && (
+    <section class="border-t border-white/5 py-14 sm:py-20">
+      <div class="container-app">
+        <h2 class="mb-8 font-heading text-2xl font-extrabold text-white sm:text-3xl">También te puede interesar</h2>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
+          {related.map((p) => (
+            <ProductCard product={p} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

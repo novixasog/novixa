@@ -1,0 +1,24 @@
+---
+import { Headphones, Watch, BatteryCharging, Smartphone } from 'lucide-astro';
+import type { ProductIcon } from '@/lib/types';
+
+interface Props {
+  icon: ProductIcon;
+  class?: string;
+  strokeWidth?: number;
+}
+
+const { icon, class: className = 'w-10 h-10', strokeWidth = 1.75 } = Astro.props;
+
+const iconMap = {
+  headphones: Headphones,
+  watch: Watch,
+  'battery-charging': BatteryCharging,
+  smartphone: Smartphone,
+  earbuds: Headphones,
+};
+
+const IconComponent = iconMap[icon] ?? Headphones;
+---
+
+<IconComponent class={className} strokeWidth={strokeWidth} />

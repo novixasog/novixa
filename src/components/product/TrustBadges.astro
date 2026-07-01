@@ -1,0 +1,25 @@
+---
+import { Truck, ShieldCheck, Wallet } from 'lucide-astro';
+
+interface Props {
+  warrantyMonths?: number;
+  class?: string;
+}
+
+const { warrantyMonths, class: className = '' } = Astro.props;
+
+const badges = [
+  { icon: Wallet, label: 'Pago contra entrega' },
+  { icon: ShieldCheck, label: warrantyMonths ? `Garantía de ${warrantyMonths} meses` : 'Garantía incluida' },
+  { icon: Truck, label: 'Envío a toda Colombia' },
+];
+---
+
+<ul class={`flex flex-wrap items-center gap-x-6 gap-y-3 ${className}`}>
+  {badges.map(({ icon: Icon, label }) => (
+    <li class="flex items-center gap-2 text-sm text-muted">
+      <Icon class="w-5 h-5 text-brand-blue shrink-0" strokeWidth={1.75} />
+      <span class="font-subheading">{label}</span>
+    </li>
+  ))}
+</ul>

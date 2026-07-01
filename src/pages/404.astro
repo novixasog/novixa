@@ -1,0 +1,22 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe o fue movida."
+  path="/404"
+  noindex
+>
+  <section class="container-app flex flex-col items-center gap-6 py-24 text-center">
+    <span class="font-heading text-6xl font-black text-gradient-brand">404</span>
+    <h1 class="font-heading text-2xl font-bold text-white">No encontramos esta página</h1>
+    <p class="max-w-md font-body text-sm text-muted">
+      Puede que el link esté roto o el producto ya no esté disponible. Vuelve al catálogo y sigue explorando.
+    </p>
+    <Button href="/" variant="primary" size="lg">Volver al inicio</Button>
+  </section>
+</BaseLayout>

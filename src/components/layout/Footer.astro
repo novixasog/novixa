@@ -1,0 +1,83 @@
+---
+import { Instagram, MessageCircle } from 'lucide-astro';
+import { categories } from '@/data/products';
+import { generateGeneralWhatsappLink } from '@/lib/whatsapp';
+
+const year = new Date().getFullYear();
+const whatsappHref = generateGeneralWhatsappLink();
+---
+
+<footer class="border-t border-white/5 bg-background">
+  <div class="container-app grid gap-10 py-14 md:grid-cols-4">
+    <!-- Marca -->
+    <div class="md:col-span-2 flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="footerLogoGradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#00B8FF"/>
+              <stop offset="1" stop-color="#8A2EFF"/>
+            </linearGradient>
+          </defs>
+          <path d="M20 20 L20 80 L50 50 L80 80 L80 20" stroke="url(#footerLogoGradient)" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="font-heading font-extrabold text-lg text-white">NOVIXA</span>
+      </div>
+      <p class="font-body text-sm text-muted max-w-sm">
+        Tecnología que te conecta al alcance de todos. Democratizamos el acceso a productos
+        tecnológicos de alta calidad con atención inmediata por WhatsApp y pago contra entrega.
+      </p>
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex w-fit items-center gap-2 rounded-xl bg-cta px-4 py-2.5 text-sm font-subheading font-semibold text-black hover:bg-cta-hover"
+      >
+        <MessageCircle class="w-4 h-4" strokeWidth={2} fill="currentColor" />
+        Escríbenos por WhatsApp
+      </a>
+    </div>
+
+    <!-- Categorías -->
+    <div class="flex flex-col gap-3">
+      <h4 class="font-subheading text-sm font-semibold uppercase tracking-wider text-white">Categorías</h4>
+      <ul class="flex flex-col gap-2">
+        {categories.map((cat) => (
+          <li>
+            <a href={`/#productos`} class="font-body text-sm text-muted hover:text-white transition-colors">
+              {cat.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Confianza -->
+    <div class="flex flex-col gap-3">
+      <h4 class="font-subheading text-sm font-semibold uppercase tracking-wider text-white">Confianza</h4>
+      <ul class="flex flex-col gap-2 font-body text-sm text-muted">
+        <li>Pago contra entrega</li>
+        <li>Garantía en todos los productos</li>
+        <li>Envío a toda Colombia</li>
+        <li>Atención NOVIXA AI 24/7</li>
+      </ul>
+      <a
+        href="https://instagram.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="NOVIXA en Instagram"
+        class="mt-1 flex w-fit items-center gap-2 text-muted hover:text-white transition-colors"
+      >
+        <Instagram class="w-5 h-5" strokeWidth={1.75} />
+        <span class="font-body text-sm">@novixa</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-white/5">
+    <div class="container-app flex flex-col-reverse items-center gap-3 py-6 text-center text-xs text-muted sm:flex-row sm:justify-between sm:text-left">
+      <span>© {year} NOVIXA. Todos los derechos reservados.</span>
+      <span>Hecho en Colombia 🇨🇴 con Astro + Cloudflare</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,75 @@
+---
+import { ShieldCheck, MessageCircle } from 'lucide-astro';
+import ProductIcon from '@/components/ui/ProductIcon.astro';
+import { formatCOP } from '@/lib/utils';
+import { generateProductWhatsappLink } from '@/lib/whatsapp';
+import type { Product } from '@/lib/types';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const whatsappHref = generateProductWhatsappLink(product);
+---
+
+<article class="group relative flex flex-col rounded-2xl border border-border bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand-blue/50 hover:shadow-glow-blue">
+  {product.compareAtPrice && (
+    <span class="absolute right-4 top-4 rounded-full bg-brand-gradient px-3 py-1 text-xs font-subheading font-bold text-white">
+      Oferta
+    </span>
+  )}
+
+  <a href={`/productos/${product.slug}`} class="flex flex-col gap-4" aria-label={`Ver detalles de ${product.name}`}>
+    <!-- Placeholder visual: icono de categoría en contenedor con gradiente de marca -->
+    <div class="flex aspect-square w-full items-center justify-center rounded-xl bg-brand-gradient-radial bg-background/60">
+      <div class="flex h-24 w-24 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow-purple transition-transform duration-300 group-hover:scale-105">
+        <ProductIcon icon={product.icon} class="w-12 h-12" strokeWidth={1.5} />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <span class="font-subheading text-xs font-semibold uppercase tracking-wider text-brand-blue">
+        {product.categoryLabel}
+      </span>
+      <h3 class="font-heading text-lg font-bold text-white leading-snug">
+        {product.name}
+      </h3>
+      <p class="font-body text-sm text-muted line-clamp-2">
+        {product.shortDescription}
+      </p>
+    </div>
+  </a>
+
+  <div class="mt-4 flex items-center justify-between">
+    <div class="flex flex-col">
+      <span class="font-heading text-xl font-extrabold text-white">{formatCOP(product.price)}</span>
+      {product.compareAtPrice && (
+        <span class="font-body text-xs text-muted line-through">{formatCOP(product.compareAtPrice)}</span>
+      )}
+    </div>
+    <div class="flex items-center gap-1 text-xs text-muted">
+      <ShieldCheck class="w-4 h-4 text-brand-blue" strokeWidth={1.75} />
+      <span>{product.warrantyMonths} meses</span>
+    </div>
+  </div>
+
+  <div class="mt-4 grid grid-cols-2 gap-2">
+    <a
+      href={`/productos/${product.slug}`}
+      class="flex items-center justify-center rounded-xl bg-brand-gradient px-3 py-2.5 text-sm font-subheading font-semibold text-white transition-transform active:scale-[0.98]"
+    >
+      Ver detalles
+    </a>
+    <a
+      href={whatsappHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Preguntar por ${product.name} en WhatsApp`}
+      class="flex items-center justify-center gap-1.5 rounded-xl bg-cta px-3 py-2.5 text-sm font-subheading font-semibold text-black transition-transform active:scale-[0.98] hover:bg-cta-hover"
+    >
+      <MessageCircle class="w-4 h-4" strokeWidth={2} fill="currentColor" />
+      Preguntar
+    </a>
+  </div>
+</article>

@@ -1,0 +1,90 @@
+---
+import type { Product } from '@/lib/types';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Ruta relativa, ej: "/productos/audifonos-bluetooth-pro" */
+  path?: string;
+  image?: string;
+  noindex?: boolean;
+  /** Si se pasa, genera Schema.org Product + Offer automáticamente. */
+  product?: Product;
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  image = '/og-default.jpg',
+  noindex = false,
+  product,
+} = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://novixa.com';
+const canonicalURL = new URL(path, siteUrl).toString();
+const ogImageURL = new URL(image, siteUrl).toString();
+const fullTitle = title.includes('NOVIXA') ? title : `${title} | NOVIXA`;
+
+// Schema.org: Organization (siempre) + Product (solo en ficha de producto)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'NOVIXA',
+  url: siteUrl,
+  logo: new URL('/logo-novixa.svg', siteUrl).toString(),
+  slogan: 'Tecnología que te conecta al alcance de todos.',
+  sameAs: ['https://instagram.com/novixa'],
+};
+
+const productSchema = product
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      description: product.description,
+      category: product.categoryLabel,
+      brand: {
+        '@type': 'Brand',
+        name: 'NOVIXA',
+      },
+      offers: {
+        '@type': 'Offer',
+        url: canonicalURL,
+        priceCurrency: 'COP',
+        price: product.price,
+        availability: product.inStock
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        itemCondition: 'https://schema.org/NewCondition',
+      },
+    }
+  : null;
+---
+
+<!-- Meta básicos -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- OpenGraph -->
+<meta property="og:type" content={product ? 'product' : 'website'} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:locale" content="es_CO" />
+<meta property="og:site_name" content="NOVIXA" />
+{product && <meta property="product:price:amount" content={String(product.price)} />}
+{product && <meta property="product:price:currency" content="COP" />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+
+<!-- Schema Markup -->
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+{productSchema && <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />}

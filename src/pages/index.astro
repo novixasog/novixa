@@ -1,0 +1,133 @@
+---
+export const prerender = true; // landing 100% estática: máxima velocidad para tráfico de TikTok/Instagram
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import ProductIcon from '@/components/ui/ProductIcon.astro';
+import ProductCard from '@/components/product/ProductCard.astro';
+import TrustBadges from '@/components/product/TrustBadges.astro';
+import { products, categories, getFeaturedProducts } from '@/data/products';
+import { generateGeneralWhatsappLink } from '@/lib/whatsapp';
+import { Zap, MessageCircle, ShieldCheck } from 'lucide-astro';
+
+const featured = getFeaturedProducts();
+const whatsappHref = generateGeneralWhatsappLink();
+
+const valueProps = [
+  {
+    icon: Zap,
+    title: 'Sin fricciones',
+    description: 'Navega, elige y compra en minutos, todo desde el celular.',
+  },
+  {
+    icon: MessageCircle,
+    title: 'NOVIXA AI en WhatsApp',
+    description: 'Resolvemos tus dudas al instante, sin esperas ni bots torpes.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Compra sin riesgo',
+    description: 'Pago contra entrega y garantía real en cada producto.',
+  },
+];
+---
+
+<BaseLayout
+  title="NOVIXA — Tecnología que te conecta al alcance de todos"
+  description="Audífonos, smartwatches y accesorios tecnológicos con envío a toda Colombia, pago contra entrega y atención inmediata por WhatsApp."
+  path="/"
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-brand-gradient-radial">
+    <div class="container-app flex flex-col items-center gap-8 py-16 text-center sm:py-24">
+      <span class="rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 font-subheading text-xs font-semibold uppercase tracking-wider text-brand-blue">
+        Envíos a toda Colombia
+      </span>
+
+      <h1 class="max-w-3xl font-heading text-4xl font-black leading-[1.05] text-white sm:text-6xl">
+        Tecnología que te conecta,
+        <span class="text-gradient-brand">al alcance de todos.</span>
+      </h1>
+
+      <p class="max-w-xl font-body text-base text-muted sm:text-lg">
+        Audífonos, smartwatches y accesorios de alta calidad. Pide por la web, cierra por WhatsApp
+        con <strong class="text-white">NOVIXA AI</strong>, y paga contra entrega.
+      </p>
+
+      <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <Button href="#productos" variant="primary" size="lg">Ver productos</Button>
+        <Button href={whatsappHref} variant="secondary" size="lg" target="_blank" ariaLabel="Hablar con NOVIXA AI por WhatsApp">
+          Hablar con NOVIXA AI
+        </Button>
+      </div>
+
+      <TrustBadges class="justify-center pt-4" />
+    </div>
+  </section>
+
+  <!-- VALUE PROPS -->
+  <section class="border-t border-white/5 py-14 sm:py-20">
+    <div class="container-app grid gap-6 sm:grid-cols-3">
+      {valueProps.map(({ icon: Icon, title, description }) => (
+        <div class="flex flex-col items-center gap-3 rounded-2xl border border-border bg-surface p-6 text-center sm:items-start sm:text-left">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gradient text-white">
+            <Icon class="w-6 h-6" strokeWidth={1.75} />
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white">{title}</h3>
+          <p class="font-body text-sm text-muted">{description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section id="categorias" class="border-t border-white/5 py-14 sm:py-20">
+    <div class="container-app">
+      <h2 class="mb-8 font-heading text-2xl font-extrabold text-white sm:text-3xl">Explora por categoría</h2>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {categories.map((cat) => (
+          <a
+            href="#productos"
+            class="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-surface p-6 text-center transition-all hover:-translate-y-1 hover:border-brand-blue/50 hover:shadow-glow-blue"
+          >
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient text-white transition-transform group-hover:scale-110">
+              <ProductIcon icon={cat.icon} class="w-7 h-7" strokeWidth={1.75} />
+            </div>
+            <span class="font-subheading text-sm font-semibold text-white">{cat.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID DE PRODUCTOS -->
+  <section id="productos" class="border-t border-white/5 py-14 sm:py-20">
+    <div class="container-app">
+      <div class="mb-8 flex flex-col gap-2">
+        <h2 class="font-heading text-2xl font-extrabold text-white sm:text-3xl">Productos destacados</h2>
+        <p class="font-body text-sm text-muted">Los favoritos de nuestra comunidad, listos para enviar.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
+        {products.map((product) => (
+          <ProductCard product={product} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIANZA -->
+  <section id="confianza" class="border-t border-white/5 bg-surface/40 py-14 sm:py-20">
+    <div class="container-app flex flex-col items-center gap-6 text-center">
+      <h2 class="font-heading text-2xl font-extrabold text-white sm:text-3xl">Compra sin miedo a estafas</h2>
+      <p class="max-w-xl font-body text-sm text-muted sm:text-base">
+        Sabemos que comprar tecnología por internet da desconfianza. Por eso en NOVIXA pagas cuando
+        recibes tu producto, con garantía real y soporte humano-AI disponible siempre.
+      </p>
+      <TrustBadges class="justify-center" />
+      <Button href={whatsappHref} variant="cta" size="lg" target="_blank" ariaLabel="Escribir a NOVIXA por WhatsApp">
+        <MessageCircle class="w-5 h-5" strokeWidth={2} fill="currentColor" />
+        Escríbenos ahora
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

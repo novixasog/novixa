@@ -1,0 +1,33 @@
+---
+import { MessageCircle } from 'lucide-astro';
+import { generateGeneralWhatsappLink } from '@/lib/whatsapp';
+
+interface Props {
+  /** Mensaje pre-cargado específico (ej. de un producto). Si no se pasa, usa el mensaje general. */
+  href?: string;
+}
+
+const { href = generateGeneralWhatsappLink() } = Astro.props;
+---
+
+<a
+  id="whatsapp-float"
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chatear con NOVIXA por WhatsApp"
+  class="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-cta pl-4 pr-5 py-4 text-black shadow-glow-cta animate-pulse-cta sm:bottom-6 sm:right-6"
+>
+  <MessageCircle class="w-6 h-6" strokeWidth={2} fill="currentColor" />
+  <span class="hidden sm:inline font-subheading font-semibold text-sm whitespace-nowrap">Escríbenos</span>
+</a>
+
+<script>
+  // Si la página expone data-whatsapp-href (ej. en la ficha de producto),
+  // el botón flotante toma ese contexto en vez del mensaje genérico.
+  const btn = document.getElementById('whatsapp-float');
+  const contextualHref = document.body.dataset.whatsappHref;
+  if (btn && contextualHref) {
+    btn.setAttribute('href', contextualHref);
+  }
+</script>

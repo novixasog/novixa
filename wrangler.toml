@@ -1,0 +1,11 @@
+name = "novixa"
+compatibility_date = "2024-09-25"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+# Variables de entorno públicas de ejemplo.
+# Configura los valores reales en el dashboard de Cloudflare Pages
+# (Settings > Environment variables), NO los subas a GitHub si son sensibles.
+[vars]
+PUBLIC_WHATSAPP_NUMBER = "573001112233"
+PUBLIC_SITE_URL = "https://novixa.com"
