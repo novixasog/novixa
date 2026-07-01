@@ -1,0 +1,63 @@
+<svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1f3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f1523;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00b8ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8a2eff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="600" fill="url(#bgGradient)"/>
+  
+  <!-- Shadow/Light effect -->
+  <ellipse cx="300" cy="450" rx="200" ry="80" fill="rgba(0, 184, 255, 0.1)" filter="url(#glow)"/>
+  
+  <!-- Left Earbud -->
+  <g transform="translate(150, 200)">
+    <!-- Outer shell with gradient -->
+    <rect x="30" y="40" width="120" height="140" rx="20" fill="url(#glowGradient)" filter="url(#glow)"/>
+    
+    <!-- Highlight -->
+    <rect x="40" y="50" width="40" height="60" rx="10" fill="rgba(255,255,255,0.3)"/>
+    
+    <!-- Display -->
+    <rect x="50" y="80" width="80" height="80" rx="8" fill="#0a0f1e" stroke="#00b8ff" stroke-width="2"/>
+    <text x="90" y="135" font-size="40" font-weight="bold" fill="#00b8ff" text-anchor="middle" font-family="Arial">80</text>
+    
+    <!-- LED indicators -->
+    <circle cx="70" cy="160" r="6" fill="#ff1493" filter="url(#glow)"/>
+    <circle cx="110" cy="160" r="6" fill="#ff1493" filter="url(#glow)"/>
+  </g>
+  
+  <!-- Right Earbud -->
+  <g transform="translate(320, 180)">
+    <!-- Outer shell with gradient -->
+    <rect x="30" y="40" width="120" height="140" rx="20" fill="url(#glowGradient)" filter="url(#glow)"/>
+    
+    <!-- Highlight -->
+    <rect x="40" y="50" width="40" height="60" rx="10" fill="rgba(255,255,255,0.3)"/>
+    
+    <!-- Display -->
+    <rect x="50" y="80" width="80" height="80" rx="8" fill="#0a0f1e" stroke="#00b8ff" stroke-width="2"/>
+    <text x="90" y="135" font-size="40" font-weight="bold" fill="#00b8ff" text-anchor="middle" font-family="Arial">80</text>
+    
+    <!-- LED indicators -->
+    <circle cx="70" cy="160" r="6" fill="#ff1493" filter="url(#glow)"/>
+    <circle cx="110" cy="160" r="6" fill="#ff1493" filter="url(#glow)"/>
+  </g>
+  
+  <!-- Product name -->
+  <text x="300" y="420" font-size="36" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">ULTRAPODS MAX 5.3</text>
+  <text x="300" y="460" font-size="18" fill="#00b8ff" text-anchor="middle" font-family="Arial">Sonido que te conecta</text>
+</svg>
