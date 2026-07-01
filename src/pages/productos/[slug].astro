@@ -47,7 +47,7 @@ const related = getRelatedProducts(product);
   <!-- FICHA DE PRODUCTO -->
   <section class="container-app grid gap-10 py-8 sm:py-12 lg:grid-cols-2 lg:gap-16">
     <!-- Visual del producto -->
-    <div class="flex aspect-square w-full items-center justify-center rounded-2xl bg-brand-gradient-radial bg-surface overflow-hidden">
+    <div class="w-full items-center justify-center rounded-2xl bg-brand-gradient-radial bg-sur p-6">
       {product.image ? (
         <img src={product.image} alt={product.name} class="w-full h-auto object-contain bg-black/5 rounded-x1" />
       ) : (
