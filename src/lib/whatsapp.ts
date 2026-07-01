@@ -3,7 +3,7 @@ import type { Product } from '@/lib/types';
 
 // Número de WhatsApp Business de NOVIXA AI, formato internacional sin "+" ni espacios.
 // En producción se lee de la variable de entorno PUBLIC_WHATSAPP_NUMBER (ver wrangler.toml).
-const FALLBACK_NUMBER = '573001112233';
+const FALLBACK_NUMBER = '573054675738';
 
 function getWhatsappNumber(): string {
   return import.meta.env.PUBLIC_WHATSAPP_NUMBER || FALLBACK_NUMBER;
