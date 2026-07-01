@@ -7,5 +7,5 @@ pages_build_output_dir = "dist"
 # Configura los valores reales en el dashboard de Cloudflare Pages
 # (Settings > Environment variables), NO los subas a GitHub si son sensibles.
 [vars]
-PUBLIC_WHATSAPP_NUMBER = "573001112233"
+PUBLIC_WHATSAPP_NUMBER = "573054675738"
 PUBLIC_SITE_URL = "https://novixa.com"
