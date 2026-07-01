@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cmd\\.exe /c \"C:\\\\Users\\\\RYZEN\\\\AppData\\\\Local\\\\GitHubDesktop\\\\app-3\\.6\\.2\\\\resources\\\\app\\\\git\\\\mingw64\\\\bin\\\\git\\.exe commit -m fix:Logo-navbar-truncated\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
