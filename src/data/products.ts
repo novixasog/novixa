@@ -21,7 +21,7 @@ export const products: Product[] = [
       'Micrófono HD - Llamadas nítidas sin ruidos',
       'Compatible con iOS y Android',
     ],
-    image: '/products/ultrapods-max-5-3.svg',
+    image: '/products/ultrapods-max-5-3.png',
     icon: 'headphones',
     warrantyMonths: 6,
     inStock: true,
