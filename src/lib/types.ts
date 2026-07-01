@@ -11,6 +11,7 @@ export interface Product {
   description: string;
   features: string[];
   icon: ProductIcon;
+  image?: string; // ruta a imagen del producto en /public/products
   warrantyMonths: number;
   inStock: boolean;
   featured?: boolean;

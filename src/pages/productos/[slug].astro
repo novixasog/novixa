@@ -47,10 +47,14 @@ const related = getRelatedProducts(product);
   <!-- FICHA DE PRODUCTO -->
   <section class="container-app grid gap-10 py-8 sm:py-12 lg:grid-cols-2 lg:gap-16">
     <!-- Visual del producto -->
-    <div class="flex aspect-square w-full items-center justify-center rounded-2xl bg-brand-gradient-radial bg-surface">
-      <div class="flex h-40 w-40 items-center justify-center rounded-3xl bg-brand-gradient text-white shadow-glow-purple sm:h-56 sm:w-56 animate-float-slow">
-        <ProductIcon icon={product.icon} class="w-20 h-20 sm:w-28 sm:h-28" strokeWidth={1.25} />
-      </div>
+    <div class="flex aspect-square w-full items-center justify-center rounded-2xl bg-brand-gradient-radial bg-surface overflow-hidden">
+      {product.image ? (
+        <img src={product.image} alt={product.name} class="w-full h-full object-cover" />
+      ) : (
+        <div class="flex h-40 w-40 items-center justify-center rounded-3xl bg-brand-gradient text-white shadow-glow-purple sm:h-56 sm:w-56 animate-float-slow">
+          <ProductIcon icon={product.icon} class="w-20 h-20 sm:w-28 sm:h-28" strokeWidth={1.25} />
+        </div>
+      )}
     </div>
 
     <!-- Info + CTA -->
