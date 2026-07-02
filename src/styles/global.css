@@ -72,3 +72,38 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Optimización para impresoras */
+@media print {
+  .bg-brand-gradient-radial,
+  .bg-brand-gradient {
+    background: white !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  section > div {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Optimización para dispositivos muy pequeños (smartwatch) */
+@media (max-width: 240px) {
+  img {
+    width: 100% !important;
+    height: auto !important;
+    min-width: 50px;
+  }
+
+  section {
+    padding: 4px !important;
+  }
+
+  .container-app {
+    padding: 4px !important;
+  }
+}
