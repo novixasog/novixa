@@ -27,7 +27,7 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
   },
-  {
+  /*{
     slug: 'smartwatch-fit-2-0',
     name: 'Smartwatch Fit 2.0',
     category: 'smartwatches',
@@ -68,7 +68,7 @@ export const products: Product[] = [
     warrantyMonths: 3,
     inStock: true,
     featured: true,
-  },
+  },*/
   {
     slug: 'pocketprint-mini-impresora',
     name: 'PocketPrint — Mini Impresora Térmica',
